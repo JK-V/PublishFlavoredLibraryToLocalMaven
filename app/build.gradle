@@ -1,0 +1,52 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 26
+    defaultConfig {
+        applicationId "com.flavouringdemo"
+        minSdkVersion 22
+        targetSdkVersion 26
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+    buildTypes {
+        debug {
+            testCoverageEnabled true
+        }
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+configurations {
+    specialDebugCompile
+    genericDebugCompile
+    specialReleaseCompile
+    genericReleaseCompile
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+//    compile project(':sdk_facade')
+    compile(name: 'sdk_core-debug', ext: 'aar')
+//    compile(name:'sdk_facade-generic-debug', ext:'aar')
+    compile(name:'sdk_facade-generic-release', ext:'aar')
+//    compile(name:'sdk_facade-whitelabel-debug', ext:'aar')
+//    compile(name:'sdk_facade-whitelabel-release', ext:'aar')
+
+
+    implementation 'com.android.support:appcompat-v7:26.1.0'
+    implementation 'com.android.support.constraint:constraint-layout:1.0.2'
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'com.android.support.test:runner:1.0.1'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
+
+//    specialDebugCompile project(path: ':sdk_facade', configuration: 'specialDebug')
+//    genericDebugCompile project(path: ':sdk_facade', configuration: 'genericDebug')
+//
+//    specialReleaseCompile project(path: ':sdk_facade', configuration: 'specialRelease')
+//    genericReleaseCompile project(path: ':sdk_facade', configuration: 'genericRelease')
+}

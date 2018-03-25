@@ -1,0 +1,46 @@
+// Top-level build file where you can add configuration options common to all sub-projects/modules.
+//apply plugin: 'maven-publish'
+
+buildscript {
+    repositories {
+        google()
+        jcenter()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:3.0.0'
+    }
+}
+
+allprojects {
+    repositories {
+        mavenLocal()
+        google()
+        jcenter()
+        //add it to be able to add depency to aar-files from libs folder in build.gradle(yoursAppModule)
+        flatDir {
+            dirs 'libs'
+        }
+    }
+}
+
+//task clean(type: Delete) {
+//    delete rootProject.buildDir
+//}
+
+ext {
+    configuration = [
+            compileSdkVersion: "26",
+            targetSdkVersion : "26",
+            minSdkVersion    : "21",
+            buildToolsVersion: "26.0.2",
+            artifactVersion  : "1.0.0"
+    ]
+
+    libraries = [
+            //Android Support Libraries
+            appcompat_v7: "26.1.0",
+
+            //Android Libraries
+            support_v4  : "27.0.0"
+    ]
+}

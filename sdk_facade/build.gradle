@@ -1,0 +1,140 @@
+apply plugin: 'com.android.library'
+apply from: "${rootDir}${File.separator}publish.gradle"
+
+android {
+    compileSdkVersion 26
+    defaultConfig {
+        minSdkVersion 21
+        targetSdkVersion 26
+        versionCode 1
+        versionName "1.0.0"
+
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+    }
+
+    /**
+     * The buildTypes block is where you can configure multiple build types.
+     * By default, the build system defines two build types: debug and release. The
+     * debug build type is not explicitly shown in the default build configuration,
+     * but it includes debugging tools and is signed with the debug key. The release
+     * build type applies Proguard settings and is not signed by default.
+     */
+    buildTypes {
+        debug {
+            testCoverageEnabled true
+            minifyEnabled true
+        }
+        release {
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    /**
+     * The productFlavors block is where you can configure multiple product
+     * flavors. This allows you to create different versions of your app that can
+     * override the defaultConfig block with their own settings. Product flavors are
+     * optional, and the build system does not create them by default. This example
+     * creates a free and paid product flavor. Each product flavor then specifies
+     * its own application ID, so that they can exist on the Google Play Store, or
+     * an Android device, simultaneously.
+     *
+     * If you're using Android plugin 3.0.0 or higher, you need to also declare
+     * and assign each flavor to a flavor dimension. To learn more, read the
+     * migration guide.
+     */
+    flavorDimensions "common"
+    //, "api", "region" //"version" , "api" -- version would be demo full & api
+    publishNonDefault true
+    productFlavors {
+
+        generic {
+            dimension "common"
+            minSdkVersion 22
+            targetSdkVersion 26
+            versionCode 1
+            versionName '1.0'
+        }
+
+        whitelabel {
+            dimension "common"
+            minSdkVersion 22
+            targetSdkVersion 26
+            versionCode 1
+            versionName '1.0'
+        }
+
+        /* api24 {
+             dimension "api"
+             minSdkVersion 24
+             targetSdkVersion 26
+             versionCode 1
+             versionName '1.0'
+         }
+         api22 {
+             dimension "api"
+             minSdkVersion 22
+             targetSdkVersion 26
+             versionCode 1
+             versionName '1.0'
+         }
+         api26 {
+             dimension "api"
+             minSdkVersion 26
+             targetSdkVersion 26
+             versionCode 1
+             versionName '1.0'
+         }
+
+         uae {
+             dimension "region"
+             minSdkVersion 22
+             targetSdkVersion 26
+             versionCode 1
+             versionName '1.0'
+         }*/
+    }
+
+    sourceSets {
+        // Encapsulates configurations for the main source set.
+        main {
+            // Changes the directory for Java sources. The default directory is
+            // 'src/main/java'.
+            java.srcDirs = ['src/main/java']
+
+            res.srcDirs = ['src/main/res']
+            /*// If you list multiple directories, Gradle uses all of them to collect
+            // sources. Because Gradle gives these directories equal priority, if
+            // you define the same resource in more than one directory, you get an
+            // error when merging resources. The default directory is 'src/main/res'.
+            res.srcDirs = ['other/res1', 'other/res2']
+
+            // Note: You should avoid specifying a directory which is a parent to one
+            // or more other directories you specify. For example, avoid the following:
+            // res.srcDirs = ['other/res1', 'other/res1/layouts', 'other/res1/strings']
+            // You should specify either only the root 'other/res1' directory, or only the
+            // nested 'other/res1/layouts' and 'other/res1/strings' directories.
+
+            // For each source set, you can specify only one Android manifest.
+            // By default, Android Studio creates a manifest for your main source
+            // set in the src/main/ directory.
+            manifest.srcFile 'other/AndroidManifest.xml'*/
+        }
+        generic {
+            java.srcDirs = ['src/generic/java']
+        }
+        whitelabel {
+            java.srcDirs = ['src/specific/java']
+        }
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    compile project(":sdk_core")
+    implementation 'com.android.support:appcompat-v7:26.1.0'
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'com.android.support.test:runner:1.0.1'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
+}
